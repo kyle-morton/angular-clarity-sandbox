@@ -13,6 +13,7 @@ export class UsersComponent implements OnInit {
 
   public users : Array<User>;
   public loading = true;
+  public total = 100;
   private page = 1;
   private count = 10;
 
@@ -22,26 +23,27 @@ export class UsersComponent implements OnInit {
     
     //get initial list of 10 users
     // this.userService.GetUsers(this.page, this.count)
-    this.userService.GetUsers()
+    // .subscribe(result => {
+    //   this.users = result;
+    //   this.loading = false;
+    // });
+
+  }
+
+  refresh(state: ClrDatagridStateInterface) {
+
+    if (!state.page)
+      return;
+
+    //calculate page to load from API
+    this.page = (state.page.from/10) + 1;
+    this.loading = true;
+
+    this.userService.GetUsers(this.page, this.count)
     .subscribe(result => {
       this.users = result;
       this.loading = false;
     });
-
-  }
-
-  // refresh(state: ClrDatagridStateInterface) {
-
-  //   let from = state.page.from;
-  //   let size = state.page.size;
-
-  //   this.loading = true;
-
-  //   this.userService.GetUsers(this.page, this.count)
-  //   .subscribe(result => {
-  //     this.users = result;
-  //     this.loading = false;
-  //   });
 }
 
 }
