@@ -10,7 +10,7 @@ import { User } from 'src/app/models/user';
 })
 export class UsersComponent implements OnInit {
 
-  users : Array<User>;
+  public users : Array<User>;
 
   constructor(private userService: UserService) { }
 
